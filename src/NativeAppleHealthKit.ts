@@ -1,17 +1,17 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
 
-interface AppleMoveTime {
+export interface AppleMoveTime {
   dateString: string;
   moveTime: number;
 }
 
-interface Step {
+export interface Step {
   dateString: string;
   stepCount: number;
 }
 
-interface HeartRate {
+export interface HeartRate {
   date: string;
   value: {
     time: string;
@@ -19,7 +19,7 @@ interface HeartRate {
   }[];
 }
 
-interface Measurement {
+export interface Measurement {
   bodyMass: number | null;
   height: number | null;
   biologicalSex: string | null;
