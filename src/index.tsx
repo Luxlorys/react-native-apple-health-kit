@@ -5,4 +5,5 @@ export const {
   requestHealthKitPermissions,
   getHeartRate,
   getMeasurement,
+  getAppleMoveTime,
 } = AppleHealthKit;

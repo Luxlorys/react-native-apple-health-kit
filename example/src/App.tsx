@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import {
+  getAppleMoveTime,
   getHeartRate,
   getMeasurement,
   getSteps,
@@ -37,6 +38,15 @@ export default function App() {
     }
   };
 
+  const handleGetAppleMoveTime = async () => {
+    try {
+      const steps = await getAppleMoveTime(30);
+      console.log(steps);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleRequestPermissions = async () => {
     setIsLoading(true);
     const result = await requestHealthKitPermissions();
@@ -60,6 +70,7 @@ export default function App() {
         title="handleGetBodyMeasurement"
         onPress={handleGetBodyMeasurement}
       />
+      <Button title="handleGetAppleMoveTime" onPress={handleGetAppleMoveTime} />
     </View>
   );
 }

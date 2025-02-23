@@ -3,7 +3,7 @@ import HealthKit
 class HealthKitQueries {
     private let healthStore = HKHealthStore()
 
-    func getSteps(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
+    func getStepsQuery(daysBefore: Int, completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         let calendar = Calendar(identifier: .gregorian)
         let endDate = Date()
         let startDate = calendar.date(byAdding: .day, value: -daysBefore, to: endDate)!
@@ -36,7 +36,7 @@ class HealthKitQueries {
 
             do {
                 let validStepsDictionaries = try checkIsEmptyArray(stepsDictionaries, "Steps read access denied")
-                completion(["steps": validStepsDictionaries], nil)
+                completion(validStepsDictionaries, nil)
             } catch {
                 completion(nil, error)
             }
@@ -45,7 +45,7 @@ class HealthKitQueries {
         healthStore.execute(query)
     }
 
-  func getHeartRate(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
+  func getHeartRateQuery(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
       let quantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
       let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
       let calendar = Calendar(identifier: .gregorian)
@@ -142,7 +142,7 @@ class HealthKitQueries {
         healthStore.execute(query)
     }
 
-  @objc public func getMeasurements(completion: @escaping ([String: AnyObject]?) -> Void) {
+  @objc public func getMeasurementsQuery(completion: @escaping ([String: AnyObject]?) -> Void) {
       var healthData: [String: Any?] = [
           "bodyMass": nil,
           "height": nil,
@@ -196,5 +196,42 @@ class HealthKitQueries {
           }
           completion(objectiveCHealthData)
       }
+  }
+  
+  func getAppleMoveTimeQuery(daysBefore: Int, completion: @escaping ([[String: Any]]?, Error?) -> Void) {
+    let quantityType = HKObjectType.quantityType(forIdentifier: .appleMoveTime)!
+    let calendar = Calendar(identifier: .gregorian)
+    let endDate = Date()
+    let startDate = calendar.date(byAdding: .day, value: -daysBefore, to: endDate)!
+    let anchorDate = calendar.startOfDay(for: endDate)
+    let interval = DateComponents(day: 1)
+
+    let query = HKStatisticsCollectionQuery(
+        quantityType: quantityType,
+        quantitySamplePredicate: HKQuery.predicateForSamples(withStart: startDate, end: endDate),
+        anchorDate: anchorDate,
+        intervalComponents: interval
+    )
+    
+    query.initialResultsHandler = {_, results, error in
+      if let error = error {
+          completion(nil, error)
+          return
+      }
+      
+      var moveTimeDictionaires: [[String: Any]] = []
+
+      results?.enumerateStatistics(from: startDate, to: endDate) { statistics, _ in
+        if let averageMoveTime = statistics.averageQuantity()?.doubleValue(for: HKUnit.count()) {
+          moveTimeDictionaires.append([
+                "dateString": getShortStringDate(statistics.startDate),
+                "moveTime": averageMoveTime
+            ])
+          }
+      }
+      completion(moveTimeDictionaires, nil)
+    }
+    
+    self.healthStore.execute(query)
   }
 }

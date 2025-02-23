@@ -1,6 +1,11 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
 
+interface AppleMoveTime {
+  dateString: string;
+  moveTime: number;
+}
+
 interface Step {
   dateString: string;
   stepCount: number;
@@ -26,6 +31,7 @@ export interface Spec extends TurboModule {
   getSteps(daysBefore: number): Promise<Step[]>;
   getHeartRate(daysBefore: number): Promise<HeartRate[]>;
   getMeasurement(): Promise<Measurement>;
+  getAppleMoveTime(daysBefore: number): Promise<AppleMoveTime[]>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('AppleHealthKit');

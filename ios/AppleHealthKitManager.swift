@@ -12,13 +12,13 @@ import HealthKit
     }
 
     @objc public func getSteps(daysBefore: NSNumber, completion: @escaping (NSArray?, Error?) -> Void) {
-        queries.getSteps(daysBefore: daysBefore.intValue) { result, error in
+        queries.getStepsQuery(daysBefore: daysBefore.intValue) { result, error in
             if let error = error {
                 completion(nil, error)
                 return
             }
 
-            guard let stepsData = result?["steps"] as? [[String: Any]] else {
+            guard let stepsData = result else {
                 completion(nil, NSError(domain: "HealthKit", code: -2, userInfo: [NSLocalizedDescriptionKey: "Invalid steps data"]))
                 return
             }
@@ -27,7 +27,7 @@ import HealthKit
     }
 
     @objc public func getHeartRate(daysBefore: NSNumber, completion: @escaping (NSArray?, Error?) -> Void) {
-        queries.getHeartRate(daysBefore: daysBefore.intValue) { result, error in
+        queries.getHeartRateQuery(daysBefore: daysBefore.intValue) { result, error in
             if let error = error {
                 completion(nil, error)
                 return
@@ -43,6 +43,21 @@ import HealthKit
 
 
     @objc public func getMeasurements(completion: @escaping ([String: AnyObject]?) -> Void) {
-        queries.getMeasurements(completion: completion)
+        queries.getMeasurementsQuery(completion: completion)
     }
+  
+  @objc public func getAppleMoveTime(daysBefore: NSNumber, completion: @escaping (NSArray?, Error?) -> Void) {
+      queries.getAppleMoveTimeQuery(daysBefore: daysBefore.intValue) { result, error in
+          if let error = error {
+              completion(nil, error)
+              return
+          }
+
+          guard let moveTimeData = result else {
+              completion(nil, NSError(domain: "HealthKit", code: -2, userInfo: [NSLocalizedDescriptionKey: "Invalid apple move time data"]))
+              return
+          }
+          completion(moveTimeData as NSArray, nil)
+      }
+  }
 }
