@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import {
+  getHeartRate,
+  getMeasurement,
   getSteps,
   requestHealthKitPermissions,
 } from 'react-native-apple-health-kit';
@@ -11,6 +13,24 @@ export default function App() {
   const handleGetStepsCountFor30Days = async () => {
     try {
       const steps = await getSteps(30);
+      console.log(steps);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetHeartRate = async () => {
+    try {
+      const steps = await getHeartRate(30);
+      console.log(steps);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetBodyMeasurement = async () => {
+    try {
+      const steps = await getMeasurement();
       console.log(steps);
     } catch (error) {
       console.log(error);
@@ -28,12 +48,17 @@ export default function App() {
     <View style={styles.container}>
       {isLoading && <ActivityIndicator size={'large'} color={'#000'} />}
       <Button
-        title="getStepsCountForLast30Days"
+        title="handleGetStepsCountFor30Days"
         onPress={handleGetStepsCountFor30Days}
       />
       <Button
-        title="requestHealthKitPermissions"
+        title="handleRequestPermissions"
         onPress={handleRequestPermissions}
+      />
+      <Button title="handleGetHeartRate" onPress={handleGetHeartRate} />
+      <Button
+        title="handleGetBodyMeasurement"
+        onPress={handleGetBodyMeasurement}
       />
     </View>
   );

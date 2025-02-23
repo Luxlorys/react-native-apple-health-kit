@@ -1,3 +1,8 @@
 import AppleHealthKit from './NativeAppleHealthKit';
 
-export const { getSteps, requestHealthKitPermissions } = AppleHealthKit;
+export const {
+  getSteps,
+  requestHealthKitPermissions,
+  getHeartRate,
+  getMeasurement,
+} = AppleHealthKit;
