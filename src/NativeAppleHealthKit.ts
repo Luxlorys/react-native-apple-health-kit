@@ -1,5 +1,5 @@
 import type { TurboModule } from 'react-native';
-import { TurboModuleRegistry } from 'react-native';
+import { Platform, TurboModuleRegistry } from 'react-native';
 
 export interface AppleMoveTime {
   dateString: string;
@@ -34,4 +34,24 @@ export interface Spec extends TurboModule {
   getAppleMoveTime(daysBefore: number): Promise<AppleMoveTime[]>;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('AppleHealthKit');
+const NoOpSpec: Spec = {
+  requestHealthKitPermissions(): Promise<string> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+  getSteps(): Promise<Step[]> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+  getHeartRate(): Promise<HeartRate[]> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+  getMeasurement(): Promise<Measurement> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+  getAppleMoveTime(): Promise<AppleMoveTime[]> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+};
+
+export default Platform.OS === 'android'
+  ? NoOpSpec
+  : TurboModuleRegistry.getEnforcing<Spec>('AppleHealthKit');
