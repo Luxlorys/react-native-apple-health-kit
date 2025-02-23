@@ -7,8 +7,11 @@ interface Step {
 }
 
 interface HeartRate {
-  dateString: string;
-  heartRate: number;
+  date: string;
+  value: {
+    time: string;
+    heartRate: number;
+  }[];
 }
 
 interface Measurement {

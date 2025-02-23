@@ -3,9 +3,9 @@ import HealthKit
 
 @objc public class AppleHealthKitManager: NSObject {
 
-    let healthStore = HKHealthStore()
-    let permissions = HealthKitPermissions()
-    let queries = HealthKitQueries()
+    private let healthStore = HKHealthStore()
+    private let permissions = HealthKitPermissions()
+    private let queries = HealthKitQueries()
 
     @objc public func requestHealthKitPermissions(completion: @escaping (Bool, Error?) -> Void) {
         permissions.requestPermissions(completion: completion)

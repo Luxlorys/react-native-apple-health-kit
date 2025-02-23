@@ -45,50 +45,59 @@ class HealthKitQueries {
         healthStore.execute(query)
     }
 
-    func getHeartRate(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
-        let quantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-        let calendar = Calendar(identifier: .gregorian)
+  func getHeartRate(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
+      let quantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+      let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+      let calendar = Calendar(identifier: .gregorian)
 
-        let endDate = Date()
-        let startDate = calendar.date(byAdding: .day, value: -daysBefore, to: endDate)!
+      let endDate = Date()
+      let startDate = calendar.date(byAdding: .day, value: -daysBefore, to: endDate)!
 
-        let sampleQuery = HKSampleQuery(
-            sampleType: quantityType,
-            predicate: HKQuery.predicateForSamples(withStart: startDate, end: endDate),
-            limit: HKObjectQueryNoLimit,
-            sortDescriptors: [sortDescriptor]
-        ) { _, results, error in
-            guard let samples = results as? [HKQuantitySample] else {
-                completion(nil, error)
-                return
-            }
+      let sampleQuery = HKSampleQuery(
+          sampleType: quantityType,
+          predicate: HKQuery.predicateForSamples(withStart: startDate, end: endDate),
+          limit: HKObjectQueryNoLimit,
+          sortDescriptors: [sortDescriptor]
+      ) { _, results, error in
+          guard let samples = results as? [HKQuantitySample] else {
+              completion(nil, error)
+              return
+          }
 
-            var heartRateDict: [String: [Double]] = [:]
+          var heartRateDict: [String: [[String: Any]]] = [:]
 
-            for sample in samples {
-                let dateKey = getShortStringDate(sample.startDate)
-                let bpm = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                heartRateDict[dateKey, default: []].append(bpm)
-            }
+          for sample in samples {
+              let dateKey = getShortStringDate(sample.startDate)
+              let timeKey = getTimeString(sample.startDate)
+              let bpm = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
+              
+              let heartRateEntry: [String: Any] = [
+                  "time": timeKey,
+                  "heartRate": bpm
+              ]
+              
+              heartRateDict[dateKey, default: []].append(heartRateEntry)
+          }
 
-            var heartRateDictionaries: [[String: Any]] = []
-            for (date, values) in heartRateDict {
-                let avgHeartRate = values.reduce(0, +) / Double(values.count)
-                heartRateDictionaries.append(["dateString": date, "heartRate": avgHeartRate])
-            }
+          var heartRateDictionaries: [[String: Any]] = []
+          for (date, values) in heartRateDict {
+              heartRateDictionaries.append([
+                  "date": date,
+                  "value": values
+              ])
+          }
 
-            do {
-                let validDictionaries = try checkIsEmptyArray(heartRateDictionaries, "Heart rate read access denied")
-                completion(["heartRate": validDictionaries], nil)
-            } catch {
-                completion(nil, error)
-            }
-        }
+          do {
+              let validDictionaries = try checkIsEmptyArray(heartRateDictionaries, "Heart rate read access denied")
+              completion(["heartRate": validDictionaries], nil)
+          } catch {
+              completion(nil, error)
+          }
+      }
 
-        healthStore.execute(sampleQuery)
-    }
-  
+      healthStore.execute(sampleQuery)
+  }
+
   private func getHeight(completion: @escaping (Double?) -> Void) {
       let heightType = HKQuantityType.quantityType(forIdentifier: .height)!
       let query = HKSampleQuery(sampleType: heightType, predicate: nil, limit: 1, sortDescriptors: nil) { (query, results, error) in
