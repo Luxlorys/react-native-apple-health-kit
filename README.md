@@ -8,17 +8,6 @@ IOS module for Apple Healhkit
 npm install react-native-apple-health-kit
 ```
 
-## Usage
-
-
-```js
-import { multiply } from 'react-native-apple-health-kit';
-
-// ...
-
-const result = multiply(3, 7);
-```
-
 
 ## Contributing
 
