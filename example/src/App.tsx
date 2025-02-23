@@ -1,23 +1,16 @@
-import { View, StyleSheet, Button } from 'react-native';
+import { useState } from 'react';
+import { View, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import {
-  getStepsCountForCurrentDay,
-  getStepsCountForLast30Days,
+  getSteps,
   requestHealthKitPermissions,
 } from 'react-native-apple-health-kit';
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleGetStepsCountFor30Days = async () => {
     try {
-      const steps = await getStepsCountForLast30Days();
-      console.log(steps);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleGetStepsCountForCurrentDay = async () => {
-    try {
-      const steps = await getStepsCountForCurrentDay();
+      const steps = await getSteps(30);
       console.log(steps);
     } catch (error) {
       console.log(error);
@@ -25,16 +18,15 @@ export default function App() {
   };
 
   const handleRequestPermissions = async () => {
+    setIsLoading(true);
     const result = await requestHealthKitPermissions();
     console.log(result);
+    setIsLoading(false);
   };
 
   return (
     <View style={styles.container}>
-      <Button
-        title="getStepsCountForCurrentDay"
-        onPress={handleGetStepsCountForCurrentDay}
-      />
+      {isLoading && <ActivityIndicator size={'large'} color={'#000'} />}
       <Button
         title="getStepsCountForLast30Days"
         onPress={handleGetStepsCountFor30Days}

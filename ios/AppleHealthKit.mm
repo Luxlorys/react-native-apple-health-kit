@@ -21,32 +21,22 @@ RCT_EXPORT_MODULE()
     return std::make_shared<facebook::react::NativeAppleHealthKitSpecJSI>(params);
 }
 
-RCT_EXPORT_METHOD(getStepsCountForCurrentDay:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
-  [moduleImpl getStepsCountForCurrentDayWithCompletion:^(NSNumber * _Nullable steps, NSError * _Nullable error) {
-      if (steps) {
-        resolve(steps);
-      } else {
-        reject(@"step_count_error", error.localizedDescription, error);
-      }
-  }];
-}
-
-RCT_EXPORT_METHOD(getStepsCountForLast30Days:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
-  [moduleImpl getStepsCountForLast30DaysWithCompletion:^(NSArray * _Nullable stepsArray, NSError * _Nullable error) {
-      if (stepsArray) {
-        resolve(stepsArray);
-      } else {
-        reject(@"step_count_error", error.localizedDescription, error);
-      }
-  }];
-}
-
 RCT_EXPORT_METHOD(requestHealthKitPermissions:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
     [moduleImpl requestHealthKitPermissionsWithCompletion:^(BOOL success, NSError * _Nullable error) {
         if (success) {
             resolve(@"Access granted");
         } else {
             reject(@"permission_error", error.localizedDescription, error);
+        }
+    }];
+}
+
+RCT_EXPORT_METHOD(getSteps:(double)daysBefore resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [moduleImpl getStepsWithDaysBefore:@(daysBefore) completion:^(NSArray * _Nullable steps, NSError * _Nullable error) {
+        if (error) {
+            reject(@"steps_error", error.localizedDescription, error);
+        } else {
+            resolve(steps);
         }
     }];
 }
