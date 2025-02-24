@@ -10,17 +10,22 @@ class HealthKitPermissions {
             return
         }
 
-        let allTypes: Set = [
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-            HKObjectType.quantityType(forIdentifier: .appleMoveTime)!,
-            HKQuantityType.quantityType(forIdentifier: .height)!,
-            HKQuantityType.quantityType(forIdentifier: .bodyMass)!,
-            HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,
-            HKSampleType.characteristicType(forIdentifier: .dateOfBirth)!
-        ]
+        var allTypes: Set = [
+          HKObjectType.quantityType(forIdentifier: .heartRate)!,
+          HKObjectType.quantityType(forIdentifier: .stepCount)!,
+          HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+          HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
+          HKQuantityType.quantityType(forIdentifier: .height)!,
+          HKQuantityType.quantityType(forIdentifier: .bodyMass)!,
+          HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,
+          HKSampleType.characteristicType(forIdentifier: .dateOfBirth)!
+      ]
+
+        if #available(iOS 14.5, *) {
+            if let moveTimeType = HKObjectType.quantityType(forIdentifier: .appleMoveTime) {
+                allTypes.insert(moveTimeType)
+            }
+        }
 
         healthStore.requestAuthorization(toShare: [], read: allTypes, completion: completion)
     }
