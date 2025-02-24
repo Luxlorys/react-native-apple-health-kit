@@ -1,12 +1,13 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from '@gromozeqa/react-native-apple-health-kit';
-
-const result = multiply(3, 7);
+import { View, StyleSheet, Button } from 'react-native';
+import { requestHealthKitPermissions } from '@gromozeqa/react-native-apple-health-kit';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button
+        title="requestHealthKitPermissions"
+        onPress={requestHealthKitPermissions}
+      />
     </View>
   );
 }
