@@ -11,11 +11,11 @@ class HealthKitPermissions {
         }
 
         let allTypes: Set = [
-            HKQuantityType(.stepCount),
-            HKQuantityType(.heartRate),
-            HKQuantityType(.distanceWalkingRunning),
-            HKQuantityType(.appleExerciseTime),
-            HKQuantityType(.appleMoveTime),
+            HKObjectType.quantityType(forIdentifier: .heartRate)!,
+            HKObjectType.quantityType(forIdentifier: .stepCount)!,
+            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+            HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
+            HKObjectType.quantityType(forIdentifier: .appleMoveTime)!,
             HKQuantityType.quantityType(forIdentifier: .height)!,
             HKQuantityType.quantityType(forIdentifier: .bodyMass)!,
             HKSampleType.characteristicType(forIdentifier: .biologicalSex)!,

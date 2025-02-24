@@ -11,7 +11,7 @@ class HealthKitQueries {
         let interval = DateComponents(day: 1)
 
         let query = HKStatisticsCollectionQuery(
-            quantityType: HKQuantityType(.stepCount),
+            quantityType: HKObjectType.quantityType(forIdentifier: .heartRate)!,
             quantitySamplePredicate: HKQuery.predicateForSamples(withStart: startDate, end: endDate),
             anchorDate: anchorDate,
             intervalComponents: interval
