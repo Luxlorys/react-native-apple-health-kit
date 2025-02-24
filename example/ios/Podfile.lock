@@ -1,5 +1,5 @@
 PODS:
-  - AppleHealthKit (0.1.0):
+  - AppleHealthKit (0.1.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1762,7 +1762,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppleHealthKit: 6db66dd476708eda9e8bdc20ffbbdc3a3990c124
+  AppleHealthKit: 2d4721ab62411867fa16087f99e7d70b0113427b
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
