@@ -21,12 +21,6 @@ class HealthKitPermissions {
           HKSampleType.characteristicType(forIdentifier: .dateOfBirth)!
       ]
 
-        if #available(iOS 14.5, *) {
-            if let moveTimeType = HKObjectType.quantityType(forIdentifier: .appleMoveTime) {
-                allTypes.insert(moveTimeType)
-            }
-        }
-
         healthStore.requestAuthorization(toShare: [], read: allTypes, completion: completion)
     }
 }

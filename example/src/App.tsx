@@ -1,76 +1,51 @@
-import { useState } from 'react';
-import { View, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import {
-  getAppleMoveTime,
-  getHeartRate,
-  getMeasurement,
   getSteps,
   requestHealthKitPermissions,
+  getHeartRate,
+  getMeasurement,
 } from 'react-native-apple-health-kit';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const requestPermissions = async () => {
+    await requestHealthKitPermissions();
+  };
 
-  const handleGetStepsCountFor30Days = async () => {
+  const stepsCount = async () => {
     try {
-      const steps = await getSteps(30);
-      console.log(steps);
+      const result = await getSteps(30);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const heartRate = async () => {
+    try {
+      const result = await getHeartRate(30);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleGetHeartRate = async () => {
+  const measurement = async () => {
     try {
-      const steps = await getHeartRate(30);
-      console.log(steps);
+      const result = await getMeasurement();
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleGetBodyMeasurement = async () => {
-    try {
-      const steps = await getMeasurement();
-      console.log(steps);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleGetAppleMoveTime = async () => {
-    try {
-      const steps = await getAppleMoveTime(30);
-      console.log(steps);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleRequestPermissions = async () => {
-    setIsLoading(true);
-    const result = await requestHealthKitPermissions();
-    console.log(result);
-    setIsLoading(false);
   };
 
   return (
     <View style={styles.container}>
-      {isLoading && <ActivityIndicator size={'large'} color={'#000'} />}
       <Button
-        title="handleGetStepsCountFor30Days"
-        onPress={handleGetStepsCountFor30Days}
+        title="requestHealthKitPermissions"
+        onPress={requestPermissions}
       />
-      <Button
-        title="handleRequestPermissions"
-        onPress={handleRequestPermissions}
-      />
-      <Button title="handleGetHeartRate" onPress={handleGetHeartRate} />
-      <Button
-        title="handleGetBodyMeasurement"
-        onPress={handleGetBodyMeasurement}
-      />
-      <Button title="handleGetAppleMoveTime" onPress={handleGetAppleMoveTime} />
+      <Button title="measurement" onPress={measurement} />
+      <Button title="heartRate" onPress={heartRate} />
+      <Button title="stepsCount" onPress={stepsCount} />
     </View>
   );
 }

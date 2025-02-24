@@ -58,16 +58,4 @@ RCT_EXPORT_METHOD(getSteps:(double)daysBefore resolve:(RCTPromiseResolveBlock)re
   }];
 }
 
-- (void)getAppleMoveTime:(double)daysBefore resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject { 
-  [moduleImpl getAppleMoveTimeWithDaysBefore:@(daysBefore) completion:^(NSArray * _Nullable data, NSError * _Nullable error) {
-      if (error) {
-          reject(@"move_time_error", error.localizedDescription, error);
-      } else {
-          resolve(data);
-      }
-  }];
-}
-
-
-
 @end

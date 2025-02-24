@@ -1792,11 +1792,11 @@ __metadata:
   linkType: hard
 
 "@evilmartians/lefthook@npm:^1.5.0":
-  version: 1.10.11
-  resolution: "@evilmartians/lefthook@npm:1.10.11"
+  version: 1.11.0
+  resolution: "@evilmartians/lefthook@npm:1.11.0"
   bin:
     lefthook: bin/index.js
-  checksum: a92c57a82b56956102761efa8ce575be488e919590a543842698cfef5cae78bff0caec3d3c313edd9d221aec643c174cd19612d71f055b2b196d03a4b3302f4e
+  checksum: 997d4e0778fa1bd8b4c8eb94b1f26c96474d081ef633a6e0e7768eb548deaf9386d70fa18ace679821d56e355f48396520d467566f5750a3915cf0e837dddd12
   conditions: (os=darwin | os=linux | os=win32) & (cpu=x64 | cpu=arm64 | cpu=ia32)
   languageName: node
   linkType: hard
@@ -4074,7 +4074,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"call-bind-apply-helpers@npm:^1.0.0, call-bind-apply-helpers@npm:^1.0.1":
+"call-bind-apply-helpers@npm:^1.0.0, call-bind-apply-helpers@npm:^1.0.1, call-bind-apply-helpers@npm:^1.0.2":
   version: 1.0.2
   resolution: "call-bind-apply-helpers@npm:1.0.2"
   dependencies:
@@ -4862,7 +4862,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3, cross-spawn@npm:^7.0.6":
   version: 7.0.6
   resolution: "cross-spawn@npm:7.0.6"
   dependencies:
@@ -5250,9 +5250,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.73":
-  version: 1.5.103
-  resolution: "electron-to-chromium@npm:1.5.103"
-  checksum: 270f8e7861e8f6f9e5ff0c23bcf73a42644dfc8eaa0f700d572f5171841209572eea66a8be3017ff75993ffaa5d434d14a3bd0651f1d007ad4ae01f2b0b1e136
+  version: 1.5.104
+  resolution: "electron-to-chromium@npm:1.5.104"
+  checksum: 5b8b22c0ae0cb1d38f154c9303d7621fefc4963d139aa0d708bee5f87d1953b709e184abccc7ee098afb0481945ac308d8c487919b66ea588b9ee45b91eb8956
   languageName: node
   linkType: hard
 
@@ -5464,7 +5464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-object-atoms@npm:^1.0.0":
+"es-object-atoms@npm:^1.0.0, es-object-atoms@npm:^1.1.1":
   version: 1.1.1
   resolution: "es-object-atoms@npm:1.1.1"
   dependencies:
@@ -6179,12 +6179,12 @@ __metadata:
   linkType: hard
 
 "foreground-child@npm:^3.1.0":
-  version: 3.3.0
-  resolution: "foreground-child@npm:3.3.0"
+  version: 3.3.1
+  resolution: "foreground-child@npm:3.3.1"
   dependencies:
-    cross-spawn: ^7.0.0
+    cross-spawn: ^7.0.6
     signal-exit: ^4.0.1
-  checksum: 1989698488f725b05b26bc9afc8a08f08ec41807cd7b92ad85d96004ddf8243fd3e79486b8348c64a3011ae5cc2c9f0936af989e1f28339805d8bc178a75b451
+  checksum: b2c1a6fc0bf0233d645d9fefdfa999abf37db1b33e5dab172b3cbfb0662b88bfbd2c9e7ab853533d199050ec6b65c03fcf078fc212d26e4990220e98c6930eef
   languageName: node
   linkType: hard
 
@@ -6313,20 +6313,20 @@ __metadata:
   linkType: hard
 
 "get-intrinsic@npm:^1.2.4, get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.2.6, get-intrinsic@npm:^1.2.7":
-  version: 1.2.7
-  resolution: "get-intrinsic@npm:1.2.7"
+  version: 1.3.0
+  resolution: "get-intrinsic@npm:1.3.0"
   dependencies:
-    call-bind-apply-helpers: ^1.0.1
+    call-bind-apply-helpers: ^1.0.2
     es-define-property: ^1.0.1
     es-errors: ^1.3.0
-    es-object-atoms: ^1.0.0
+    es-object-atoms: ^1.1.1
     function-bind: ^1.1.2
-    get-proto: ^1.0.0
+    get-proto: ^1.0.1
     gopd: ^1.2.0
     has-symbols: ^1.1.0
     hasown: ^2.0.2
     math-intrinsics: ^1.1.0
-  checksum: a1597b3b432074f805b6a0ba1182130dd6517c0ea0c4eecc4b8834c803913e1ea62dfc412865be795b3dacb1555a21775b70cf9af7a18b1454ff3414e5442d4a
+  checksum: 301008e4482bb9a9cb49e132b88fee093bff373b4e6def8ba219b1e96b60158a6084f273ef5cafe832e42cd93462f4accb46a618d35fe59a2b507f2388c5b79d
   languageName: node
   linkType: hard
 

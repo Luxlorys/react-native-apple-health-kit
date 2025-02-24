@@ -1,11 +1,6 @@
 import type { TurboModule } from 'react-native';
 import { Platform, TurboModuleRegistry } from 'react-native';
 
-export interface AppleMoveTime {
-  dateString: string;
-  moveTime: number;
-}
-
 export interface Step {
   dateString: string;
   stepCount: number;
@@ -31,7 +26,6 @@ export interface Spec extends TurboModule {
   getSteps(daysBefore: number): Promise<Step[]>;
   getHeartRate(daysBefore: number): Promise<HeartRate[]>;
   getMeasurement(): Promise<Measurement>;
-  getAppleMoveTime(daysBefore: number): Promise<AppleMoveTime[]>;
 }
 
 const NoOpSpec: Spec = {
@@ -45,9 +39,6 @@ const NoOpSpec: Spec = {
     return Promise.reject(new Error('HealthKit is not available on Android.'));
   },
   getMeasurement(): Promise<Measurement> {
-    return Promise.reject(new Error('HealthKit is not available on Android.'));
-  },
-  getAppleMoveTime(): Promise<AppleMoveTime[]> {
     return Promise.reject(new Error('HealthKit is not available on Android.'));
   },
 };

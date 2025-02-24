@@ -45,19 +45,4 @@ import HealthKit
     @objc public func getMeasurements(completion: @escaping ([String: AnyObject]?) -> Void) {
         queries.getMeasurementsQuery(completion: completion)
     }
-  
-  @objc public func getAppleMoveTime(daysBefore: NSNumber, completion: @escaping (NSArray?, Error?) -> Void) {
-      queries.getAppleMoveTimeQuery(daysBefore: daysBefore.intValue) { result, error in
-          if let error = error {
-              completion(nil, error)
-              return
-          }
-
-          guard let moveTimeData = result else {
-              completion(nil, NSError(domain: "HealthKit", code: -2, userInfo: [NSLocalizedDescriptionKey: "Invalid apple move time data"]))
-              return
-          }
-          completion(moveTimeData as NSArray, nil)
-      }
-  }
 }

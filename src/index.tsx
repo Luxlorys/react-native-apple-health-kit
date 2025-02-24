@@ -1,9 +1,8 @@
-import AppleHealthKit from './NativeAppleHealthKit';
+import NativeAppleHealthKit from './NativeAppleHealthKit';
 
 export const {
-  getSteps,
   requestHealthKitPermissions,
   getHeartRate,
   getMeasurement,
-  getAppleMoveTime,
-} = AppleHealthKit;
+  getSteps,
+} = NativeAppleHealthKit;
