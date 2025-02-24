@@ -1,25 +1,6 @@
 import type { TurboModule } from 'react-native';
 import { Platform, TurboModuleRegistry } from 'react-native';
-
-export interface Step {
-  dateString: string;
-  stepCount: number;
-}
-
-export interface HeartRate {
-  date: string;
-  value: {
-    time: string;
-    heartRate: number;
-  }[];
-}
-
-export interface Measurement {
-  bodyMass: number | null;
-  height: number | null;
-  biologicalSex: string | null;
-  dateOfBirth: string | null;
-}
+import type { HeartRate, Measurement, Step } from './types';
 
 export interface Spec extends TurboModule {
   requestHealthKitPermissions(): Promise<string>;
