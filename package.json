@@ -1,6 +1,6 @@
 {
   "name": "@gromozeqa/react-native-apple-health-kit",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "IOS module for react native to enable health kit",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
