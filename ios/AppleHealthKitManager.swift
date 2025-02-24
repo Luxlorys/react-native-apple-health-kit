@@ -33,7 +33,7 @@ import HealthKit
                 return
             }
 
-            guard let heartRateData = result?["heartRate"] as? [[String: Any]] else {
+            guard let heartRateData = result else {
                 completion(nil, NSError(domain: "HealthKit", code: -2, userInfo: [NSLocalizedDescriptionKey: "Invalid heart rate data"]))
                 return
             }

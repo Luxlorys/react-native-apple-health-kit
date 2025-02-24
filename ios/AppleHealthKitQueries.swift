@@ -35,7 +35,7 @@ class HealthKitQueries {
             }
 
             do {
-                let validStepsDictionaries = try checkIsEmptyArray(stepsDictionaries, "Steps read access denied")
+                let validStepsDictionaries = try checkIsEmptyArray(stepsDictionaries, "No Health Data Available")
                 completion(validStepsDictionaries, nil)
             } catch {
                 completion(nil, error)
@@ -45,7 +45,7 @@ class HealthKitQueries {
         healthStore.execute(query)
     }
 
-  func getHeartRateQuery(daysBefore: Int, completion: @escaping ([String: Any]?, Error?) -> Void) {
+  func getHeartRateQuery(daysBefore: Int, completion: @escaping ([[String: Any]]?, Error?) -> Void) {
       let quantityType = HKObjectType.quantityType(forIdentifier: .heartRate)!
       let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
       let calendar = Calendar(identifier: .gregorian)
@@ -88,8 +88,8 @@ class HealthKitQueries {
           }
 
           do {
-              let validDictionaries = try checkIsEmptyArray(heartRateDictionaries, "Heart rate read access denied")
-              completion(["heartRate": validDictionaries], nil)
+              let validDictionaries = try checkIsEmptyArray(heartRateDictionaries, "No Health Data Available")
+              completion(validDictionaries, nil)
           } catch {
               completion(nil, error)
           }
@@ -186,7 +186,6 @@ class HealthKitQueries {
 
       // Notify when all tasks are done
       dispatchGroup.notify(queue: .main) {
-          // Convert [String: Any?] to [String: AnyObject]
           let objectiveCHealthData = healthData.mapValues { value in
               if let value = value {
                   return value as AnyObject
@@ -228,8 +227,14 @@ class HealthKitQueries {
                 "moveTime": averageMoveTime
             ])
           }
+          
       }
-      completion(moveTimeDictionaires, nil)
+        do {
+            let validDictionaries = try checkIsEmptyArray(moveTimeDictionaires, "No Health Data Available")
+            completion(validDictionaries, nil)
+        } catch {
+            completion(nil, error)
+        }
     }
     
     self.healthStore.execute(query)
