@@ -28,6 +28,7 @@ export interface Spec extends TurboModule {
   getSteps(daysBefore: number): Promise<Step[]>;
   getHeartRate(daysBefore: number): Promise<HeartRate[]>;
   getMeasurement(): Promise<Measurement>;
+  checkAvailability(): Promise<boolean>;
 }
 
 const NoOpSpec: Spec = {
@@ -41,6 +42,9 @@ const NoOpSpec: Spec = {
     return Promise.reject(new Error('HealthKit is not available on Android.'));
   },
   getMeasurement(): Promise<Measurement> {
+    return Promise.reject(new Error('HealthKit is not available on Android.'));
+  },
+  checkAvailability(): Promise<boolean> {
     return Promise.reject(new Error('HealthKit is not available on Android.'));
   },
 };

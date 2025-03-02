@@ -41,21 +41,26 @@ RCT_EXPORT_METHOD(getSteps:(double)daysBefore resolve:(RCTPromiseResolveBlock)re
     }];
 }
 
-- (void)getHeartRate:(double)daysBefore resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
-  [moduleImpl getHeartRateWithDaysBefore:@(daysBefore) completion:^(NSArray * _Nullable steps, NSError * _Nullable error) {
-    if (error) {
-        reject(@"heart_rate_error", error.localizedDescription, error);
-    } else {
-        resolve(steps);
-    }
-}];
+RCT_EXPORT_METHOD(getHeartRate:(double)daysBefore resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [moduleImpl getHeartRateWithDaysBefore:@(daysBefore) completion:^(NSArray * _Nullable steps, NSError * _Nullable error) {
+        if (error) {
+            reject(@"heart_rate_error", error.localizedDescription, error);
+        } else {
+            resolve(steps);
+        }
+    }];
 }
 
+RCT_EXPORT_METHOD(getMeasurement:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [moduleImpl getMeasurementsWithCompletion:^(NSDictionary<NSString *, id> * _Nullable data) {
+        resolve(data);
+    }];
+}
 
-- (void)getMeasurement:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
-  [moduleImpl getMeasurementsWithCompletion:^(NSDictionary<NSString *, id> * _Nullable data) {
-    resolve(data);
-  }];
+RCT_EXPORT_METHOD(checkAvailability:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+    [moduleImpl checkAvailabilityWithCompletion:^(BOOL result) {
+        resolve(@(result));
+    }];
 }
 
 @end
