@@ -21,3 +21,7 @@ export async function getHeartRate(
 ): Promise<HeartRate[]> {
   return await ReactNativeAppleHealthKit.getHeartRate(forNumberOfDay);
 }
+
+export async function checkAvailability(): Promise<boolean> {
+  return await ReactNativeAppleHealthKit.checkAvailability();
+}
