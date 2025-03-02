@@ -1,6 +1,7 @@
 # 📅 React Native Apple HealthKit
 
-🔹 **React Native Apple HealthKit** Expose HealthKit API from your React Native App!
+🔹 **React Native Apple HealthKit** A React Native package to interact with Apple HealthKit for iOS.
+This package allows access to health & fitness data exposed by Apple Healthkit.
 
 ---
 
@@ -8,7 +9,7 @@
 
 - **📆 Check Availability**: Check whether HealthKit is available on current device.
 - **🔒 Secure Access**: Requires user permission for accessing HealthKit data.
-- **📸 Snapshot for N days**: Returns snapshot for past N days of user's: steps count & heart rate;
+- **📸 Snapshot for N days**: Returns a snapshot for past N days of user's: steps count & heart rate;
 
 ---
 
@@ -41,6 +42,12 @@ Edit **`Info.plist`**. Add the following item (Set **Value** as desired):
 | _Privacy - NSHealthShareUsageDescription_ | `String` | _CHANGEME: This app requires read access to your Health data._ |
 
 
+### To add Healthkit support to your application's Capabilities ###
+
+Open the ios/ folder of your project in Xcode
+Select the project name in the left sidebar
+In the main view select '+ Capability' and double click 'HealthKit'
+
 📌 Example Usage
 
 ✅ Request Permissions
@@ -56,7 +63,7 @@ const requestPermissions = async () => {
   };
 ```
 
-### 📆 Sample Methods
+### 📆 Methods
 
 Below are the methods available in **React Native Apple HealthKit**
 
@@ -65,7 +72,7 @@ Below are the methods available in **React Native Apple HealthKit**
 ### Get steps count for past N days
 
 
-📌 Example Usage
+📌 **Get steps count for past N days**
 
 ```ts
 import { getSteps } from '@gromozeqa/react-native-apple-health-kit';
@@ -79,3 +86,38 @@ const getStepsCount = async () => {
     }
   };
 ```
+
+📌 **Get heart rate for past N days**
+
+```ts
+import { getHeartRate } from '@gromozeqa/react-native-apple-health-kit';
+
+const getUsersHeartRate = async () => {
+    try {
+      const steps = await getHeartRate(30);
+      console.log(steps);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+```
+
+📌 **Get user's body measurement**
+
+```ts
+import { getMeasurement } from '@gromozeqa/react-native-apple-health-kit';
+
+const getUserMeasurement = async () => {
+    try {
+      const steps = await getMeasurement();
+      console.log(steps);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+```
+
+### ⚠️Permissions ###
+Due to Apple's privacy model, if a user has previously denied a specific permission they will not be prompted again for that permission. The user will need to go into the Apple Health app and grant the permission to your app.
+
+If read permissions are not granted for the requested data, the method will return an empty array.
