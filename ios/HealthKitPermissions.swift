@@ -30,4 +30,13 @@ class HealthKitPermissions {
 
         healthStore.requestAuthorization(toShare: [], read: allTypes, completion: completion)
     }
+  
+  func checkAvailability(completion: @escaping (Bool) -> Void) {
+    if HKHealthStore.isHealthDataAvailable() {
+      completion(true)
+    } else {
+      let error = NSError(domain: "HealthKit", code: -1, userInfo: [NSLocalizedDescriptionKey: "HealthKit is not available on this device."])
+      completion(false)
+    }
+  }
 }
